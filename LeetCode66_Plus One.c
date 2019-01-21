@@ -1,5 +1,6 @@
 int* plusOne(int* digits, int digitsSize, int* returnSize)
 {
+	
 	int i;
 	int* ren = (int*)malloc((digitsSize + 1)*sizeof(int));
 	for (i = digitsSize - 1; i >= 0; i--)
@@ -35,8 +36,8 @@ int* plusOne(int* digits, int digitsSize, int* returnSize)
 			ren[i] = digits[i];
 		}
 		*returnSize = digitsSize;
+		
 		return ren;
 	}
 }
 
-版权声明：本文为博主原创文章，转载请附上博文链接！
