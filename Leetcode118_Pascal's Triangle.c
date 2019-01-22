@@ -10,13 +10,13 @@ int** generate(int numRows, int** columnSizes) {
     
     int i, j;
     int **array;
-    *columnSizes = calloc(numRows, sizeof(int));
+    *columnSizes = calloc(numRows, sizeof(int));//申请返回数组行数
     for(i = 0; i < numRows; i++)
-        (*columnSizes)[i] = i+1;
-    array = calloc(numRows, sizeof(int *));
+        (*columnSizes)[i] = i+1;//计算返回数组每行元素数
+    array = calloc(numRows, sizeof(int *));//申请返回数组
 
     for(i = 0; i < numRows; i++){
-        array[i] = calloc((*columnSizes)[i], sizeof(int));
+        array[i] = calloc((*columnSizes)[i], sizeof(int));//申请返回数组每行元素空间
         for(j = 0; j < (*columnSizes)[i]; j++){
             
             if(i < 2)
