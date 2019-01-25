@@ -1,6 +1,6 @@
 int strStr(char* haystack, char* needle) {
-    int len=strlen(haystack);
-    int len2=strlen(needle);
+    int len=strlen(haystack);//原串
+    int len2=strlen(needle);//子串
     
     if((len==0&&len2==0)||len2==0){
         return 0;
@@ -13,10 +13,10 @@ int strStr(char* haystack, char* needle) {
             if(count==(len2-1)){
                  return i;
              }
-            ++count;
+            ++count;//比较原串子串下一位
         }else{
             count=0;
-            i++;
+            i++;//比较原串下一位
         }
     }
     return -1;
