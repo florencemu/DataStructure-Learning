@@ -12,8 +12,8 @@ int* getRow(int rowIndex, int* returnSize) {
     int *res = (int*)malloc(sizeof(int) * (rowIndex + 1));
      
     for (int row = 0; row <= rowIndex; row++)
-        for (int col = row; col >= 0; col--)
-            res[col] = (col == 0 || col == row) ? 1 : res[col] + res[col - 1];
+        for (int col = row; col >= 0; col--)//控制下标数循环
+            res[col] = (col == 0 || col == row) ? 1 : res[col] + res[col - 1];//依次覆盖上一层
      
     *returnSize = rowIndex + 1;
     return res;
