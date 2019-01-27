@@ -23,21 +23,24 @@ void reverse(char *s, int start, int end) {
         s[start++] = s[end]; 
         s[end--] = tmp; 
     } 
-} 
+} //先翻转单词 eg: hello world -> olleh dlorw
 
 void reverseWords(char *s) { 
     int last = 0, now = 0; 
     while (s[now]) {
-        while (s[now] == ' ') now++; 
+        while (s[now] == ' ') now++; //遍历是空格
         last = now; 
-        while (s[now] != ' '&&s[now] != '\0') 
-            now++; 
-        reverse(s, last, now-1); } 
-    reverse(s, 0, now - 1); 
+        while (s[now] != ' '&&s[now] != '\0') now++; //遍历是单词
+        reverse(s, last, now-1); 
+} 
+    reverse(s, 0, now - 1); //再整体翻转 eg: olleh dlorw -> world hello
+
     last = 0; //遍历删除多余空格 
     for (int i = 0; i < now; i++) { 
         //前导空格直接跳过 || 如果已经有一个合法空格加入字符串中，则当前相同的字符跳过 
-        if (s[i] != ' ' || (last &&s[last-1] != s[i])) { s[last++] = s[i]; } } 
+        if (s[i] != ' ' || (last &&s[last-1] != s[i])) { 
+		s[last++] = s[i]; } 
+	} 
     //删除后面的空格 
     s[last] = 0; 
     if (last&&s[last - 1] == ' ') 

@@ -39,28 +39,4 @@ void rotate(int* nums, int numsSize, int k) {
  
 }
 
-/*利用(i+k)%numsSize从第一个开始确定该元素旋转后的位置，直到所有元素归位。*/
-public void rotate2(int[] nums, int k) {
-    if (nums.length == 0 || (k %= nums.length) == 0) {
-        return;
-    }
-    int length = nums.length;
-    int start = 0;
-    int i = 0;
-    int cur = nums[i];
-    int cnt = 0;
-
-    while (cnt++ < length) {
-        i = (i + k) % length;
-        int t = nums[i];
-        nums[i] = cur;
-        if (i == start) {
-            ++start;
-            ++i;
-            cur = nums[i];
-        } else {
-            cur = t;
-        }
-    }
-}
 
