@@ -1,115 +1,101 @@
-typedef struct {
+
+
+struct MyListNode{
     int val;
-    struct MyLinkedList* next;
-} MyLinkedList;
+    struct MyListNode* next;
+};
 
-/*为头节点申请空间*/
+typedef struct MyListNode MyLinkedList;
+
+/** Initialize your data structure here. */
 MyLinkedList* myLinkedListCreate() {
-    MyLinkedList *head = (MyLinkedList*)malloc(sizeof(MyLinkedList));
-    head->next = NULL;
-    
-    return head;
+    MyLinkedList* obj;
+    obj = (MyLinkedList*)malloc(sizeof(MyLinkedList));
+    obj->val = 0;
+    obj->next = NULL;
+    return obj;
 }
 
-/*获取链表中第 index 个节点的值。如果索引无效，则返回-1*/
+/** Get the value of the index-th node in the linked list. If the index is invalid, return -1. */
 int myLinkedListGet(MyLinkedList* obj, int index) {
-    MyLinkedList *p = obj;
-    int i = 0;  
-    while(i <= index && p != NULL) {
-        p = p->next;
-        i++;
+    int i = 0;
+    MyLinkedList* cur = obj->next;
+    for(i = 0; i < index && cur != NULL; i++){
+        cur = cur->next;
     }
-    
-    return i - 1 == index && p != NULL ? p->val : -1;
+    if(i == index && cur != NULL){
+        return cur->val;
+    }else{
+        return -1;
+    }
 }
 
-/*在链表的第一个元素之前添加一个值为 val 的节点。插入后，新节点将成为链表的第一个节点*/
+/** Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list. */
 void myLinkedListAddAtHead(MyLinkedList* obj, int val) {
-    MyLinkedList *p = obj->next;
-    
-    MyLinkedList *newNode = (MyLinkedList*)malloc(sizeof(MyLinkedList));
-    newNode->val = val;
-    newNode->next = p;
-    
-    obj->next = newNode;
+    MyLinkedList *temp;
+    temp = (MyLinkedList*)malloc(sizeof(MyLinkedList));
+    temp->val = val;
+    temp->next = obj->next;
+    obj->next = temp;
+    obj->val++;
 }
 
-/* 将值为 val 的节点追加到链表的最后一个元素。*/
-void myLinkedListAddAtTail(MyLinkedList* obj, int val) {  b
-    MyLinkedList *last = obj;
-    while(last->next != NULL) last = last->next;/*一直遍历到最后一个节点*/
-    
-    MyLinkedList *newNode = (MyLinkedList*)malloc(sizeof(MyLinkedList));
-    newNode->val = val;
-    newNode->next = NULL;
-    
-    last->next = newNode;
+/** Append a node of value val to the last element of the linked list. */
+void myLinkedListAddAtTail(MyLinkedList* obj, int val) {
+    MyLinkedList* cur = obj;
+    while(cur->next){
+        cur = cur->next;
+    }
+    cur->next = (MyLinkedList*)malloc(sizeof(MyLinkedList));
+    cur->next->val = val;
+    cur->next->next = NULL;
+    obj->val++;
 }
 
-/*在链表中的第 index 个节点之前添加值为 val  的节点。*/
+/** Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted. */
 void myLinkedListAddAtIndex(MyLinkedList* obj, int index, int val) {
-
-    // 如果 index 等于链表的长度，则该节点将附加到链表的末尾。如果 index 大于链表长度，则不会插入节点
-    if(index < 0){
-        return;
+    if(index < 0 || index > obj->val){
+        return ;
     }
-
-    // 找到位置i的前缀
-    MyLinkedList *p = obj;
-    int i;
-    for(i = 0;i < index  && p != NULL;i++) p = p->next;
-    
-    // index超过链表的长度
-    if(p == NULL) {
-        return;
+    int i = 0;
+    MyLinkedList *cur = obj, *temp;
+    for(i = 0; i < index; i++){
+        cur = cur->next;
     }
     
-    // 创建新节点
-    MyLinkedList *newNode = (MyLinkedList*)malloc(sizeof(MyLinkedList));
-    newNode->val = val;
-    
-    // 设置链表关系
-    newNode->next = p->next;
-    p->next = newNode;
+    temp = (MyLinkedList*)malloc(sizeof(MyLinkedList));
+    temp->val = val;
+    temp->next = cur->next;
+    cur->next = temp;
+    obj->val++;
 }
 
-/*如果索引 index 有效，则删除链表中的第 index 个节点*/
+/** Delete the index-th node in the linked list, if the index is valid. */
 void myLinkedListDeleteAtIndex(MyLinkedList* obj, int index) {
-    
-    if(index < 0){
-        return;
+    if(index < 0 || index > obj->val - 1){
+        return ;
     }
-
-    // 找到位置i的前缀
-    MyLinkedList *p = obj;
-    int i;
-    for(i = 0;i < index && p->next != NULL;i++) p = p->next;
-    
-    // index超过链表的长度
-    if(p->next == NULL) {
-        return;
+    int i = 0;
+    MyLinkedList* cur = obj, *temp;
+    for(i = 0; i < index; i++){
+        cur = cur->next;
     }
     
-    // 删除节点
-    // 要删除的节点(位置i的节点)
-    MyLinkedList *s = p->next;
-    
-    // 修改链表关系
-    p->next = s->next;
-    
-    // 释放删除节点的空间
-    free(s);
+    temp = cur->next;
+    cur->next = cur->next->next;
+    // free(temp);
+    obj->val--;
+        
 }
 
 void myLinkedListFree(MyLinkedList* obj) {
-    // 删除链表
-    MyLinkedList *cur = obj->next, *front = NULL;
-    
-    while(cur != NULL) {
-        front = cur;
-        cur = cur->next;
-        free(front);
-    }
+    // MyLinkedList *cur = obj->next, *temp;
+    // while(cur){
+    //     temp = cur->next;
+    //     free(cur);
+    //     cur = temp;
+    // }
+    // free(obj);
 }
 
 
